@@ -91,4 +91,25 @@ public class UserDaoTest {
         UserDao userDao = new UserDao(ds);
         assertThat(userDao.get(id)).isEmpty();
     }
+
+    @Test
+    void getHandlesSQLException() throws SQLException {
+
+        when(ds.getConnection()).thenThrow(new SQLException("SQL error"));
+
+        UserDao userDao = new UserDao(ds);
+        assertThat(userDao.get("2")).isEmpty();
+    }
+
+    @Test
+    void getHandlesSQLExceptionWhenInvalidSql() throws SQLException {
+
+        final String id = "1";
+
+        when(ds.getConnection()).thenReturn(conn);
+        when(conn.createStatement()).thenReturn(stmt);
+        when(stmt.executeQuery(anyString())).thenThrow(new SQLException("SQL error"));
+        UserDao userDao = new UserDao(ds);
+        assertThat(userDao.get("1")).isEmpty();
+    }
 }
