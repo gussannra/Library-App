@@ -1,2 +1,9 @@
 # Ignore VS Code files
 .vscode/*
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
