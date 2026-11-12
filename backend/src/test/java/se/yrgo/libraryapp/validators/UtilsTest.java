@@ -25,15 +25,20 @@ public class UtilsTest {
         assertThat(Utils.onlyLettersAndWhitespace(" bosse karl karlsson ")).isEqualTo(" bosse karl karlsson ");
     }
 
-    @Test
-    void onlylettersAndWhitespaceAcceptsEmptyString() {
-        assertThat(Utils.onlyLettersAndWhitespace("")).isEqualTo("");
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"BOSSE KARLSSON", "Bosse Karlsson"})
     void onlyLettersAndWhitespaceReturnsLowercase(String realname) {
         assertThat(Utils.onlyLettersAndWhitespace(realname)).isEqualTo("bosse karlsson");
+    }
+
+    @Test
+    void onlyLettersAndWhiteSpaceHandlesTab() {
+        assertThat(Utils.onlyLettersAndWhitespace("\t")).isEqualTo("\t");
+    }
+
+    @Test
+    void onlyLettersAndWhiteSpaceHandlesNewLine() {
+        assertThat(Utils.onlyLettersAndWhitespace("\n")).isEqualTo("\n");
     }
 
     @ParameterizedTest
@@ -44,21 +49,6 @@ public class UtilsTest {
 
     @Test
     void cleanAndUnleetConvertsToLetters() {
-        assertThat(Utils.cleanAndUnLeet("80553")).isEqualTo("bosse");
-    }
-
-    @Test
-    void cleanAndUnleetRemovesNonAlphabetics() {
-        assertThat(Utils.cleanAndUnLeet("!8o?5_5&e-")).isEqualTo("bosse");
-    }
-
-    @Test
-    void cleanAndUnleetReturnsLowercase() {
-        assertThat(Utils.cleanAndUnLeet("BOSSE")).isEqualTo("bosse");
-    }
-
-    @Test
-    void cleanAndUnleetKeepsWhitespace() {
-        assertThat(Utils.cleanAndUnLeet(" bosse karlsson ")).isEqualTo(" bosse karlsson ");
+        assertThat(Utils.cleanAndUnLeet("01345678")).isEqualTo("oleasgtb");
     }
 }

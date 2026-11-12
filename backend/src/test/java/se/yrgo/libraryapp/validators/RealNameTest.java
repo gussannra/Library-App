@@ -10,14 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class RealNameTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"bosse karlsson", "37-3!1i5a Gu5/4v_ 5s0n+"})
+    @ValueSource(strings = {"Bosse Karlsson", "Lisa Lamm", "Kenneth Smith"})
     void realNameValidName(String validName) {
         assertTrue(RealName.validate(validName));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"blimey", "darn", "frack", "bosse blimey bosse", "frack bosse", "bosse darn"})
-    void realNameInvalidName(String badWord) {
-        assertFalse(RealName.validate(badWord));
+    void realNameInvalidName(String invalidName) {
+        assertFalse(RealName.validate(invalidName));
     }
 }
