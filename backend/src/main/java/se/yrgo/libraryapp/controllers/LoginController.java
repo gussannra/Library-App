@@ -21,7 +21,7 @@ public class LoginController {
     private SessionDao sessionDao;
 
     @Inject
-    LoginController(UserService userService, RoleDao roleDao, SessionDao sessionDao) {
+    public LoginController(UserService userService, RoleDao roleDao, SessionDao sessionDao) {
         this.userService = userService;
         this.roleDao = roleDao;
         this.sessionDao = sessionDao;
