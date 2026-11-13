@@ -40,12 +40,6 @@ public class BookDao {
 
 
     public Set<BookEdition> find(String isbn, String title, String author) {
-        if ((isbn == null || isbn.trim().length() == 0)
-                && (title == null || title.trim().length() == 0)
-                && (author == null || author.trim().length() == 0)) {
-            return Set.of();
-        }
-
         try (Connection conn = ds.getConnection();
                 PreparedStatement ps = createFindQuery(conn, isbn, title, author);
                 ResultSet rs = ps.executeQuery()) {
@@ -57,7 +51,6 @@ public class BookDao {
     }
 
     public Set<BookEdition> withClass(DdsClassification classification) {
-
         try (Connection conn = ds.getConnection();
                 PreparedStatement ps = createClassificationQuery(conn, classification);
                 ResultSet rs = ps.executeQuery()) {
