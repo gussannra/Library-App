@@ -1,5 +1,8 @@
 package se.yrgo.libraryapp.validators;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import net.jqwik.api.ForAll;
+import net.jqwik.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -50,5 +53,22 @@ public class UtilsTest {
     @Test
     void cleanAndUnleetConvertsToLetters() {
         assertThat(Utils.cleanAndUnLeet("01345678")).isEqualTo("oleasgtb");
+    }
+
+    // should make letter to lowercase
+    @Property
+    void onlyLettersAndWhitespaceToLowercase(@ForAll String name) {
+        assertThat(Utils.onlyLettersAndWhitespace(name)).isLowerCase();
+    }
+
+    // test keeps whitespaces with only whitespace
+    @Property
+    void onlyLettersAndWhitespaceKeepWhitespace(@ForAll("onlyWhitespace") String name) {
+        assertThat(Utils.onlyLettersAndWhitespace(name)).isEqualTo(name);
+    }
+
+    @Provide
+    Arbitrary<String> onlyWhitespace() {
+        return Arbitraries.strings().withChars(" \t\n\r\f").ofMinLength(1);
     }
 }
